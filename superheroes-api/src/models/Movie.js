@@ -5,7 +5,7 @@ const sequelize = require("../database/database")
 const Movie = sequelize.define("Movie", {
     
     id: {
-        type: DataTypes.IntegerDataType,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
