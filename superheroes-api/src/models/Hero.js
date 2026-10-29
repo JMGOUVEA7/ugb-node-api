@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize"); //sequelize: responsável pelo banco de dados e definir as tabelas
 
 const sequelize = require("../database/database.js");
 
