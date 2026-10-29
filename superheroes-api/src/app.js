@@ -1,10 +1,10 @@
 const express = require("express"); //importando tudo (descerialização)
 const sequelize = require("./database/database");
 
-const Hero = require("./models/Hero")
-const Movie = require("./models/Movie")
-
-const app = express()
+const Hero = require("./models/Hero");
+const Movie = require("./models/Movie");
+const heroesRoutes = require("./routes/heroes.routes");
+const app = express();
 
 Hero.belongsToMany(Movie, {
     through: "HeroMovies"
@@ -13,6 +13,8 @@ Hero.belongsToMany(Movie, {
 Movie.belongsToMany(Hero, {
     through: "MoviesHero"
 })
+
+app.use("/heroes", heroesRoutes);
 
 sequelize.sync()
     .then(() => { //função q n tem nome, só executa (arrow function) 
