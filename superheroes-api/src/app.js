@@ -4,7 +4,9 @@ const sequelize = require("./database/database");
 const Hero = require("./models/Hero");
 const Movie = require("./models/Movie");
 const heroesRoutes = require("./routes/heroes.routes");
+
 const app = express();
+app.use(express.json());
 
 Hero.belongsToMany(Movie, {
     through: "HeroMovies"
