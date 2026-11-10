@@ -1,26 +1,128 @@
 const Hero = require ("../models/Hero")
 
+
+// listar todos os herois
 async function list(paramsreq, res) {
     const movies = await Hero.findAll()
     return res.status(200).json(movies);
 }
 
-async function create(req,res){
 
-    const { name, universe, power } = req.body;  //descerialização
+// buscar heroi pelo ID
+async function getById(req, res) {
+    try {
+        const hero = await Hero.findByPk(req.params.id, {
+            include: Movie
+        });
 
-    if (!name || !universe || !power){
-        return res.status(400).json({
-            message: "Nome, universo e poder são obrigatórios"
+        if (!hero) {
+            return res.status(404).json({
+                message: "Herói não encontrado."
+            });
+        }
+
+        return res.status(200).json(hero);
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao buscar herói.",
+            error: error.message
         });
     }
-
-    const hero = await Hero.create({name, universe, power});
-    return res.status(201).json(hero);
 }
+
+
+//cadastrar heroi
+async function create(req,res){
+    try {
+        const { name, universe, power } = req.body;  //descerialização
+
+        if (!name || !universe || !power){
+            return res.status(400).json({
+                message: "Nome, universo e poder são obrigatórios"
+            });
+        }
+
+        const hero = await Hero.create({
+            name, 
+            universe, 
+            power});
+
+        return res.status(201).json(hero); 
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao cadastrar herói.",
+            error: error.message
+        });
+    }
+}
+
+
+// atualizar heroi
+async function update(req, res) {
+    try {
+        const hero = await Hero.findByPk(req.params.id);
+
+        if (!hero) {
+            return res.status(404).json({
+                message: "Herói não encontrado."
+            });
+        }
+
+        const { name, universe, power } = req.body;
+
+        if (name !== undefined) hero.name = name;
+        if (universe !== undefined) hero.universe = universe;
+        if (power !== undefined) hero.power = power;
+
+        await hero.save();
+
+        return res.status(200).json(hero);
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao atualizar herói.",
+            error: error.message
+        });
+    }
+}
+
+
+// excluir heroi
+async function remove(req, res) {
+    try {
+        const hero = await Hero.findByPk(req.params.id);
+
+        if (!hero) {
+            return res.status(404).json({
+                message: "Herói não encontrado."
+            });
+        }
+
+        await hero.destroy();
+
+        return res.status(200).json({
+            message: "Herói excluído com sucesso."
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao excluir herói.",
+            error: error.message
+        });
+    }
+}
+
+
+
+
 
 //pesquisar assinc await
 module.exports = {
     list,
-    create
+    getById,
+    create,
+    update,
+    remove
 };
