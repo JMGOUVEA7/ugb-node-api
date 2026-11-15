@@ -1,10 +1,21 @@
-const Hero = require ("../models/Hero")
-
+const Hero = require ("../models/Hero");
+const Movie = require("../models/Movie");
 
 // listar todos os herois
-async function list(paramsreq, res) {
-    const movies = await Hero.findAll()
-    return res.status(200).json(movies);
+async function list(req, res) {
+    try {
+        const heroes = await Hero.findAll({
+            include: Movie
+        });
+
+        return res.status(200).json(heroes);
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao listar heróis.",
+            error: error.message
+        });
+    }
 }
 
 
