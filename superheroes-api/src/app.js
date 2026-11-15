@@ -5,7 +5,7 @@ const Hero = require("./models/Hero");
 const Movie = require("./models/Movie");
 
 const heroesRoutes = require("./routes/heroes.routes");
-const moviesRoutes = require("./routes/moviesRoutes.route");
+const moviesRoutes = require("./routes/movies.routes");
 
 const app = express();
 app.use(express.json());

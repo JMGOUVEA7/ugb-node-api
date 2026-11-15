@@ -126,7 +126,82 @@ async function remove(req, res) {
 }
 
 
+// listar filmes de um herói
+async function listMovies(req, res) {
+    try {
+        const hero = await Hero.findByPk(req.params.id);
 
+        if (!hero) {
+            return res.status(404).json({
+                message: "Herói não encontrado."
+            });
+        }
+
+        const movies = await hero.getMovies();
+
+        return res.status(200).json(movies);
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao listar filmes.",
+            error: error.message
+        });
+    }
+}
+
+
+// associar filme a um herói
+async function addMovie(req, res) {
+    try {
+        const hero = await Hero.findByPk(req.params.id);
+        const movie = await Movie.findByPk(req.params.movieId);
+
+        if (!hero || !movie) {
+            return res.status(404).json({
+                message: "Herói ou filme não encontrado."
+            });
+        }
+
+        await hero.addMovie(movie);
+
+        return res.status(200).json({
+            message: "Filme associado ao herói com sucesso."
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao associar filme.",
+            error: error.message
+        });
+    }
+}
+
+
+// remover associação entre heroi e filme
+async function removeMovie(req, res) {
+    try {
+        const hero = await Hero.findByPk(req.params.id);
+        const movie = await Movie.findByPk(req.params.movieId);
+
+        if (!hero || !movie) {
+            return res.status(404).json({
+                message: "Herói ou filme não encontrado."
+            });
+        }
+
+        await hero.removeMovie(movie);
+
+        return res.status(200).json({
+            message: "Associação removida com sucesso."
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao remover associação.",
+            error: error.message
+        });
+    }
+}
 
 
 //pesquisar assinc await
@@ -135,5 +210,8 @@ module.exports = {
     getById,
     create,
     update,
-    remove
+    remove,
+    listMovies,
+    addMovie,
+    removeMovie
 };

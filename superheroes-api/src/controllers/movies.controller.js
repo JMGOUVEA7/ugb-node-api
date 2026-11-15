@@ -132,10 +132,34 @@ async function remove(req, res) {
 }
 
 
+// listar herois de um filme
+async function listHeroes(req, res) {
+    try {
+        const movie = await Movie.findByPk(req.params.id);
+
+        if (!movie) {
+            return res.status(404).json({
+                message: "Filme não encontrado."
+            });
+        }
+
+        const heroes = await movie.getHeroes();
+
+        return res.status(200).json(heroes);
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Erro ao listar heróis.",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     list,
     getById,
     create,
     update,
-    remove
+    remove,
+    listHeroes
 };
