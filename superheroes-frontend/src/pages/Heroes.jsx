@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 
 import {
   getHeroes,
@@ -16,8 +16,11 @@ function Heroes() {
   const [error, setError] = useState('')
   const [editingHero, setEditingHero] = useState(null)
 
-  async function loadHeroes() {
+  // Buscar os heróis na API
+  const loadHeroes = useCallback(async () => {
     try {
+      setError('')
+
       const data = await getHeroes()
       setHeroes(data)
     } catch (error) {
@@ -25,14 +28,17 @@ function Heroes() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     loadHeroes()
-  }, [])
+  }, [loadHeroes])
 
+  // Cadastrar ou atualizar um herói
   async function handleSave(hero) {
     try {
+      setError('')
+
       if (editingHero) {
         await updateHero(editingHero.id, hero)
       } else {
@@ -40,13 +46,17 @@ function Heroes() {
       }
 
       setEditingHero(null)
-      setError('')
+
       await loadHeroes()
+
+      return true
     } catch (error) {
       setError(error.message)
+      return false
     }
   }
 
+  // Excluir um herói
   async function handleDelete(id) {
     const confirmed = window.confirm(
       'Tem certeza que deseja excluir este herói?'
@@ -55,8 +65,10 @@ function Heroes() {
     if (!confirmed) return
 
     try {
-      await deleteHero(id)
       setError('')
+
+      await deleteHero(id)
+
       await loadHeroes()
     } catch (error) {
       setError(error.message)
@@ -64,7 +76,11 @@ function Heroes() {
   }
 
   if (loading) {
-    return <p className="text-slate-500">Carregando heróis...</p>
+    return (
+      <p className="text-slate-500">
+        Carregando heróis...
+      </p>
+    )
   }
 
   return (
