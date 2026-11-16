@@ -16,7 +16,7 @@ Hero.belongsToMany(Movie, {
 });
 
 Movie.belongsToMany(Hero, {
-    through: "MoviesHero"
+    through: "HeroMovies"
 });
 
 
