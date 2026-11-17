@@ -50,7 +50,7 @@ function HeroForm({ onSave, editingHero, onCancel }) {
       onSubmit={handleSubmit}
       className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-8"
     >
-      <h2 className="text-xl font-bold text-slate-800 mb-5">
+      <h2 className="text-xl font-bold text-black-800 mb-5">
         {editingHero ? 'Editar herói' : 'Cadastrar herói'}
       </h2>
 

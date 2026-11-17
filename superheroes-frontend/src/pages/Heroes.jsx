@@ -16,7 +16,7 @@ function Heroes() {
   const [error, setError] = useState('')
   const [editingHero, setEditingHero] = useState(null)
 
-  // Buscar os heróis na API
+  // buscar herois na api
   const loadHeroes = useCallback(async () => {
     try {
       setError('')
@@ -34,7 +34,7 @@ function Heroes() {
     loadHeroes()
   }, [loadHeroes])
 
-  // Cadastrar ou atualizar um herói
+  // cadastrar ou atualizar um heroi
   async function handleSave(hero) {
     try {
       setError('')
@@ -56,7 +56,7 @@ function Heroes() {
     }
   }
 
-  // Excluir um herói
+  // excluir heroi
   async function handleDelete(id) {
     const confirmed = window.confirm(
       'Tem certeza que deseja excluir este herói?'
@@ -86,11 +86,11 @@ function Heroes() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800">
+        <h1 className="text-3xl font-bold text-800">
           Heróis
         </h1>
 
-        <p className="text-slate-500 mt-2">
+        <p className="text-500 mt-2">
           Gerencie os heróis cadastrados na API.
         </p>
       </div>
