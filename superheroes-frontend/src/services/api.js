@@ -1,5 +1,8 @@
 const API_URL = '/api'
 
+
+// HERÓIS
+
 export async function getHeroes() {
   const response = await fetch(`${API_URL}/heroes`)
 
@@ -52,4 +55,35 @@ export async function deleteHero(id) {
   }
 
   return true
+}
+
+
+// FILMES
+
+// Buscar todos os filmes
+export async function getMovies() {
+  const response = await fetch(`${API_URL}/movies`)
+
+  if (!response.ok) {
+    throw new Error('Erro ao buscar os filmes.')
+  }
+
+  return response.json()
+}
+
+// Cadastrar filme
+export async function createMovie(movie) {
+  const response = await fetch(`${API_URL}/movies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(movie),
+  })
+
+  if (!response.ok) {
+    throw new Error('Erro ao cadastrar o filme.')
+  }
+
+  return response.json()
 }

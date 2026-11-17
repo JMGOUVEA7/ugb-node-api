@@ -86,11 +86,11 @@ function Heroes() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-800">
+        <h1 className="text-3xl font-bold text-black-800">
           Heróis
         </h1>
 
-        <p className="text-500 mt-2">
+        <p className="text-black-500 mt-2">
           Gerencie os heróis cadastrados na API.
         </p>
       </div>

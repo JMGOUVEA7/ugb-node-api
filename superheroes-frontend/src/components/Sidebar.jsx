@@ -1,4 +1,4 @@
-function Sidebar() {
+function Sidebar({ activePage, onNavigate }) {
   return (
     <aside className="w-64 min-h-screen bg-blue-900 text-white p-6">
 
@@ -8,19 +8,27 @@ function Sidebar() {
 
       <nav className="space-y-3">
 
-        <a
-          href="#"
-          className="block bg-red-600 px-4 py-3 rounded-lg font-medium"
+        <button
+          onClick={() => onNavigate('heroes')}
+          className={`block w-full text-left px-4 py-3 rounded-lg font-medium transition ${
+            activePage === 'heroes'
+              ? 'bg-red-600'
+              : 'hover:bg-slate-800'
+          }`}
         >
-            Heróis
-        </a>
+          Heróis
+        </button>
 
-        <a
-          href="#"
-          className="block px-4 py-3 rounded-lg hover:bg-slate-800 transition"
+        <button
+          onClick={() => onNavigate('movies')}
+          className={`block w-full text-left px-4 py-3 rounded-lg font-medium transition ${
+            activePage === 'movies'
+              ? 'bg-red-600'
+              : 'hover:bg-slate-800'
+          }`}
         >
-            Filmes
-        </a>
+          Filmes
+        </button>
 
       </nav>
 
