@@ -82,7 +82,7 @@ function Movies() {
 
   if (loading) {
     return (
-      <p className="text-slate-500">
+      <p className="text-black-500">
         Carregando filmes...
       </p>
     )
@@ -96,7 +96,7 @@ function Movies() {
           Filmes
         </h1>
 
-        <p className="text-slate-500 mt-2">
+        <p className="text-black-500 mt-2">
           Gerencie os filmes cadastrados na API.
         </p>
       </div>

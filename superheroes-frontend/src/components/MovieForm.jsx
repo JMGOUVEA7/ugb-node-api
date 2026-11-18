@@ -45,7 +45,7 @@ function MovieForm({ onSave, editingMovie, onCancel }) {
       className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-8"
     >
 
-      <h2 className="text-xl font-bold text-slate-800 mb-5">
+      <h2 className="text-xl font-bold text-black-800 mb-5">
         {editingMovie ? 'Editar filme' : 'Cadastrar filme'}
       </h2>
 

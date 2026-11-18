@@ -2,15 +2,11 @@ function MovieCard({ movie, onEdit, onDelete }) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition">
 
-      <div className="flex items-center justify-center bg-blue-100 rounded-lg w-14 h-14 mb-4">
-        <span className="text-2xl">🎬</span>
-      </div>
-
-      <h2 className="text-xl font-bold text-slate-800">
+      <h2 className="text-xl font-bold text-black-800">
         {movie.title}
       </h2>
 
-      <p className="text-sm text-slate-500 mt-2">
+      <p className="text-sm text-black-500 mt-2">
         Ano de lançamento: {movie.year}
       </p>
 
