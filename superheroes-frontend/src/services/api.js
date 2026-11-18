@@ -60,7 +60,7 @@ export async function deleteHero(id) {
 
 // FILMES
 
-// Buscar todos os filmes
+// buscar todos os filmes
 export async function getMovies() {
   const response = await fetch(`${API_URL}/movies`)
 
@@ -71,7 +71,7 @@ export async function getMovies() {
   return response.json()
 }
 
-// Cadastrar filme
+// cadastrar filme
 export async function createMovie(movie) {
   const response = await fetch(`${API_URL}/movies`, {
     method: 'POST',
@@ -86,4 +86,34 @@ export async function createMovie(movie) {
   }
 
   return response.json()
+}
+
+// atualizar filme
+export async function updateMovie(id, movie) {
+  const response = await fetch(`${API_URL}/movies/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(movie),
+  })
+
+  if (!response.ok) {
+    throw new Error('Erro ao atualizar o filme.')
+  }
+
+  return response.json()
+}
+
+// excluir filme
+export async function deleteMovie(id) {
+  const response = await fetch(`${API_URL}/movies/${id}`, {
+    method: 'DELETE',
+  })
+
+  if (!response.ok) {
+    throw new Error('Erro ao excluir o filme.')
+  }
+
+  return true
 }

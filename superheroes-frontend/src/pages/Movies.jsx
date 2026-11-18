@@ -3,6 +3,8 @@ import { useEffect, useCallback, useState } from 'react'
 import {
   getMovies,
   createMovie,
+  updateMovie,
+  deleteMovie,
 } from '../services/api'
 
 import MovieCard from '../components/MovieCard'
@@ -12,6 +14,7 @@ function Movies() {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [editingMovie, setEditingMovie] = useState(null)
 
   // Buscar filmes na API
   const loadMovies = useCallback(async () => {
@@ -31,12 +34,18 @@ function Movies() {
     loadMovies()
   }, [loadMovies])
 
-  // Cadastrar filme
+  // Cadastrar ou atualizar filme
   async function handleSave(movie) {
     try {
       setError('')
 
-      await createMovie(movie)
+      if (editingMovie) {
+        await updateMovie(editingMovie.id, movie)
+      } else {
+        await createMovie(movie)
+      }
+
+      setEditingMovie(null)
 
       await loadMovies()
 
@@ -44,6 +53,30 @@ function Movies() {
     } catch (error) {
       setError(error.message)
       return false
+    }
+  }
+
+  // excluir filme
+  async function handleDelete(id) {
+    const confirmed = window.confirm(
+      'Tem certeza que deseja excluir este filme?'
+    )
+
+    if (!confirmed) return
+
+    try {
+      setError('')
+
+      await deleteMovie(id)
+
+      // cancela a edicao se o filme excluido estava sendo editado
+      if (editingMovie?.id === id) {
+        setEditingMovie(null)
+      }
+
+      await loadMovies()
+    } catch (error) {
+      setError(error.message)
     }
   }
 
@@ -74,7 +107,11 @@ function Movies() {
         </p>
       )}
 
-      <MovieForm onSave={handleSave} />
+      <MovieForm
+        onSave={handleSave}
+        editingMovie={editingMovie}
+        onCancel={() => setEditingMovie(null)}
+      />
 
       {movies.length === 0 ? (
         <p className="text-slate-500">
@@ -87,6 +124,8 @@ function Movies() {
             <MovieCard
               key={movie.id}
               movie={movie}
+              onEdit={setEditingMovie}
+              onDelete={handleDelete}
             />
           ))}
 

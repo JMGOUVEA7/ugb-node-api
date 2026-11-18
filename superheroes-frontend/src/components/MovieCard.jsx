@@ -1,4 +1,4 @@
-function MovieCard({ movie }) {
+function MovieCard({ movie, onEdit, onDelete }) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition">
 
@@ -13,6 +13,24 @@ function MovieCard({ movie }) {
       <p className="text-sm text-slate-500 mt-2">
         Ano de lançamento: {movie.year}
       </p>
+
+      <div className="flex gap-3 mt-5">
+
+        <button
+          onClick={() => onEdit(movie)}
+          className="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-2 rounded-lg transition"
+        >
+          Editar
+        </button>
+
+        <button
+          onClick={() => onDelete(movie.id)}
+          className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition"
+        >
+          Excluir
+        </button>
+
+      </div>
 
     </div>
   )
